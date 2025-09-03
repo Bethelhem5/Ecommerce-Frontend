@@ -1,45 +1,43 @@
-// ...existing code...
-const RateProduct = () => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h2 className="text-2xl font-bold mb-4">Rate & Comment</h2>
-      <p className="text-lg">This is a placeholder for the rating and comment form.</p>
-    </div>
-  );
-};
+import LoginPage from "./Pages/LoginPage";
+import { Routes, Route } from "react-router-dom";
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Cart from './pages/Cart';
-import Order from './pages/Order';
-import Viewdetail from './components/Viewdetail';
-import Addreview from './components/Addreview';
-import Dashboard from './Admin/Dashboard';
+import SellerDashboard from "./Pages/Seller/SellerDashboard";
+import AddProduct from "./Pages/Seller/AddProductPage";
+import SellerProducts from "./Pages/Seller/SellerProductPage";
+import SellerOverview from "./Pages/Seller/SellerOverview";
+import SellerOrder from "./Pages/Seller/SellerOrderPage";
+import SellerReview from "./Pages/Seller/SellerReviewPage";
+import SellerProfile from "./Pages/Seller/SellerProfile";
+import EditProductPage from "./Pages/Seller/EditProductPage";
+import DeleteMessage from "./Pages/Seller/DeleteMessage";
+import Register from "./Pages/RegisterPage";
+import Dashboard from "./Pages/customer/dashboard";
+import CartDetails from "./Pages/customer/CartDetails";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <Navbar />
-      <div className="pt-20"> {/* Add padding to avoid overlap with fixed navbar */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register/>} />
-            <Route path='/profile' element={<Profile/>}/>
-            <Route path='/cart' element={<Cart/>}/>
-            <Route path='/order' element={<Order/>}/>
-          <Route path="/viewdetail/:id" element={<Viewdetail />} />
-          <Route path="/viewdetail/:id/rate" element={<Addreview />} />
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-        </Routes>
-      </div>
-    </div>
+    <Routes>
+      {/* Public route */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path='/' element = {<Register/>} />
+
+      {/* Seller dashboard layout with nested routes */}
+      <Route path="/seller" element={<SellerDashboard />}>
+        <Route index element={<SellerOverview />} /> {/* Default overview */}
+        <Route path="overview" element={<SellerOverview />} />
+        <Route path="my-products" element={<SellerProducts />} />
+        <Route path="AddProducts" element={<AddProduct />} />
+        <Route path="orders" element={<SellerOrder />} />
+        <Route path="reviews" element={<SellerReview />} />
+        <Route path="profile" element={<SellerProfile />} />
+        {/* Add more nested routes for orders, reviews, profile if needed */}
+      </Route>
+      <Route path="/edit-product/:id" element={<EditProductPage />} />
+      <Route path="/delete-product/:id" element={<DeleteMessage />} />
+      <Route path='/customer/dashboard' element={<Dashboard/>} />
+      <Route path='/customer/cart' element={<CartDetails/>} />
+    </Routes>
   );
-};
+}
 
 export default App;
